@@ -19,7 +19,7 @@ test_kosmos
 Tests for `kosmos` module.
 """
 
-from kosmos.tests import base
+from kosmos.tests.unit import base
 
 
 class TestKosmos(base.TestCase):
