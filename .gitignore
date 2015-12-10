@@ -28,7 +28,7 @@ pip-log.txt
 nosetests.xml
 .testrepository
 .venv
-
+cover/*
 # Translations
 *.mo
 
@@ -52,3 +52,9 @@ ChangeLog
 *~
 .*.swp
 .*sw?
+.idea
+*.ipynb
+.ipynb_checkpoints/*
+*.sublime-*
+# Flake8 Results
+flake8_results.html
