@@ -1,0 +1,9 @@
+Verified+2: Jenkins
+Code-Review+2: Graham Hayes <graham.hayes@hpe.com>
+Workflow+1: Graham Hayes <graham.hayes@hpe.com>
+Code-Review+2: Michael Johnson <johnsomor@gmail.com>
+Submitted-by: Jenkins
+Submitted-at: Thu, 10 Dec 2015 18:35:33 +0000
+Reviewed-on: https://review.openstack.org/255540
+Project: openstack/kosmos
+Branch: refs/heads/master
