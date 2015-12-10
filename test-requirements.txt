@@ -14,4 +14,3 @@ testrepository>=0.0.18
 testscenarios>=0.4
 testtools>=1.4.0
 oslo.versionedobjects>=0.13.0
-
