@@ -52,3 +52,9 @@ ChangeLog
 *~
 .*.swp
 .*sw?
+.idea
+*.ipynb
+.ipynb_checkpoints/*
+
+# Flake8 Results
+ flake8_results.html
