@@ -52,3 +52,6 @@ ChangeLog
 *~
 .*.swp
 .*sw?
+.idea
+*.ipynb
+.ipynb_checkpoints/*
