@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 # Copyright 2015 Hewlett Packard Enterprise Development LP
-
+#
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
 # a copy of the License at
@@ -12,8 +11,23 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
+from oslo_log import log as logging
+from pecan import expose
+from kosmos.api.v0.controllers import errors
+from kosmos.api.v0.controllers import gslbs
+from kosmos.api.v0.controllers import pools
+from kosmos.api.v0.controllers import monitors
 
-import pbr.version
+LOG = logging.getLogger(__name__)
 
-__version__ = pbr.version.VersionInfo(
-    'kosmos').version_string()
+
+class RootController(object):
+
+    @expose(generic=True)
+    def index(self):
+        return dict()
+
+    gslbs = gslbs.GSLBSController()
+    monitors = monitors.MonitorsController()
+    pools = pools.PoolsController()
+    errors = errors.ErrorsController()
