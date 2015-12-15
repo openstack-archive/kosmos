@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 # Copyright 2015 Hewlett Packard Enterprise Development LP
-
+#
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
 # a copy of the License at
@@ -12,8 +11,15 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
+from oslo_config import cfg
 
-import pbr.version
+cfg.CONF.register_group(cfg.OptGroup(
+    name='service:conductor', title="Configuration for Engine Service"
+))
 
-__version__ = pbr.version.VersionInfo(
-    'kosmos').version_string()
+cfg.CONF.register_opts([
+    cfg.IntOpt('workers', default=3,
+               help='Number of central worker processes to spawn'),
+    cfg.IntOpt('threads', default=1000,
+               help='Number of central greenthreads to spawn'),
+], group='service:conductor')
