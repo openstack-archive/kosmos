@@ -23,7 +23,6 @@ import hashlib
 import random
 import socket
 
-
 from oslo_log import log as logging
 from oslo_utils import excutils
 
