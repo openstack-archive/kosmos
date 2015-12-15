@@ -16,6 +16,7 @@
 """
 Routines for configuring Kosmos
 """
+import os
 
 from oslo_config import cfg
 from oslo_db import options as db_options
@@ -58,10 +59,11 @@ db_options.set_defaults(cfg.CONF,
 logging.register_options(cfg.CONF)
 
 
-def init(args, **kwargs):
-    cfg.CONF(args=args, project='kosmos',
+def init(args):
+    config_files = find_config('kosmos.conf')
+    cfg.CONF(args=args[1:], project='kosmos',
              version='%%prog %s' % version.version_info.release_string(),
-             **kwargs)
+             default_config_files=config_files)
 
 
 def setup_logging(conf):
@@ -72,3 +74,38 @@ def setup_logging(conf):
     product_name = "kosmos"
     logging.setup(conf, product_name)
     LOG.info(_LI("Logging enabled!"))
+
+
+def find_config(config_path):
+    """
+    Find a configuration file using the given hint.
+
+    Code nabbed from cinder, by designate, then nabbed from designate
+
+    :param config_path: Full or relative path to the config.
+    :returns: List of config paths
+    """
+    possible_locations = [
+        config_path,
+        os.path.join(cfg.CONF.pybasedir, "etc", "kosmos", config_path),
+        os.path.join(cfg.CONF.pybasedir, "etc", config_path),
+        os.path.join(cfg.CONF.pybasedir, config_path),
+        "/etc/kosmos/%s" % config_path,
+    ]
+
+    found_locations = []
+
+    for path in possible_locations:
+        LOG.debug('Searching for configuration at path: %s' % path)
+        if os.path.exists(path):
+            LOG.debug('Found configuration at path: %s' % path)
+            found_locations.append(os.path.abspath(path))
+
+    return found_locations
+
+
+def read_config(prog, argv):
+    logging.register_options(cfg.CONF)
+    config_files = find_config('%s.conf' % prog)
+    cfg.CONF(argv[1:], project='designate', prog=prog,
+             default_config_files=config_files)
