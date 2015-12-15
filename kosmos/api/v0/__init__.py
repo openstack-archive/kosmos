@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 # Copyright 2015 Hewlett Packard Enterprise Development LP
-
+#
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
 # a copy of the License at
@@ -12,23 +11,22 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
-import os
-
-import pbr.version
-from oslo_config import cfg
+from pecan import deploy
 
 
-__version__ = pbr.version.VersionInfo(
-    'kosmos').version_string()
+def factory(global_config, **local_conf):
+    conf = {
+        'app': {
+            'root': 'kosmos.api.v0.controllers.root.RootController',
+            'modules': ['kosmos.api.v0'],
+            'errors': {
+                404: '/errors/not_found',
+                405: '/errors/method_not_allowed',
+                '__force_dict__': True
+            }
+        }
+    }
 
+    app = deploy.deploy(conf)
 
-cfg.CONF.register_opts([
-    cfg.StrOpt(
-        'pybasedir',
-        default=os.path.abspath(os.path.join(os.path.dirname(__file__),
-                                             '../')),
-        help='Directory where the kosmos python module is installed'
-    ),
-    cfg.StrOpt('state-path', default='/var/lib/kosmos',
-               help='Top-level directory for maintaining kosmos\'s state'),
-])
+    return app

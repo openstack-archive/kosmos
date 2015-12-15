@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 # Copyright 2015 Hewlett Packard Enterprise Development LP
-
+#
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
 # a copy of the License at
@@ -12,23 +11,31 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
-import os
-
-import pbr.version
+import pecan
+import pecan.deploy
 from oslo_config import cfg
+from oslo_log import log as logging
 
 
-__version__ = pbr.version.VersionInfo(
-    'kosmos').version_string()
-
+LOG = logging.getLogger(__name__)
 
 cfg.CONF.register_opts([
-    cfg.StrOpt(
-        'pybasedir',
-        default=os.path.abspath(os.path.join(os.path.dirname(__file__),
-                                             '../')),
-        help='Directory where the kosmos python module is installed'
-    ),
-    cfg.StrOpt('state-path', default='/var/lib/kosmos',
-               help='Top-level directory for maintaining kosmos\'s state'),
-])
+    cfg.BoolOpt('pecan_debug', default=False,
+                help='Pecan HTML Debug Interface'),
+], group='service:api')
+
+
+def setup_app(pecan_config):
+    config = dict(pecan_config)
+
+    config['app']['debug'] = cfg.CONF['service:api'].pecan_debug
+
+    pecan.configuration.set_config(config, overwrite=True)
+
+    app = pecan.make_app(
+        pecan_config.app.root,
+        debug=getattr(pecan_config.app, 'debug', False),
+        force_canonical=getattr(pecan_config.app, 'force_canonical', True)
+    )
+
+    return app
