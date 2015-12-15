@@ -1,5 +1,5 @@
 *.py[cod]
-
+etc/kosmos/kosmos.conf
 # C extensions
 *.so
 
