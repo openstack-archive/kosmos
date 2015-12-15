@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 # Copyright 2015 Hewlett Packard Enterprise Development LP
-
+#
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
 # a copy of the License at
@@ -12,23 +11,33 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
-import os
+import sys
 
-import pbr.version
 from oslo_config import cfg
+from oslo_service import service
+from oslo_service.wsgi import Loader
+
+from kosmos.api import service as api
+from kosmos.common import config
+
+CONF = cfg.CONF
 
 
-__version__ = pbr.version.VersionInfo(
-    'kosmos').version_string()
+def main():
 
+    config.setup_logging(CONF)
+    config.init(sys.argv)
 
-cfg.CONF.register_opts([
-    cfg.StrOpt(
-        'pybasedir',
-        default=os.path.abspath(os.path.join(os.path.dirname(__file__),
-                                             '../')),
-        help='Directory where the kosmos python module is installed'
-    ),
-    cfg.StrOpt('state-path', default='/var/lib/kosmos',
-               help='Top-level directory for maintaining kosmos\'s state'),
-])
+    process_launcher = service.ProcessLauncher(CONF)
+    process_launcher.launch_service(
+        api.Service(
+            CONF,
+            'API',
+            Loader(CONF).load_app('kosmos'),
+            host=CONF['service:api'].bind_host,
+            port=CONF['service:api'].bind_port
+        ),
+
+        workers=CONF['service:api'].workers)
+
+    process_launcher.wait()
