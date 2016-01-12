@@ -19,12 +19,12 @@ from kosmos.objects import base
 # NOTE: The hashes in this list should only be changed if they come with a
 # corresponding version bump in the affected objects.
 object_data = {
-    'LoadBalancer': '1.0-06538794c851e034ece73694cc4737ad',
-    'Monitor': '1.0-1e3dd244093ce14b4b8079ae4deea343',
-    'MonitorParameter': '1.0-5fae2adca64543db6c854f6418de7089',
-    'Pool': '1.0-fb284fb3826c2c984494a319f91d04b1',
-    'PoolMember': '1.0-0586ac99722f74080988aa49113452de',
-    'PoolMemberParameter': '1.0-5fae2adca64543db6c854f6418de7089'
+    'LoadBalancer': '1.0-b1c9ee6d670761a96c72cf664039eaaa',
+    'Monitor': '1.0-3e98af74f3c7f366a2c5615de910952d',
+    'MonitorParameter': '1.0-07e865a2200abd700ef7101152f0ec40',
+    'Pool': '1.0-1e4e0d82db50e6da85154b28faf71f5c',
+    'PoolMember': '1.0-9537b1e55498529a36d9ca225e9c5c7c',
+    'PoolMemberParameter': '1.0-07e865a2200abd700ef7101152f0ec40',
 }
 
 
