@@ -17,8 +17,7 @@ from kosmos.objects import fields
 
 
 @base.VersionedObjectRegistry.register
-class MonitorParameter(base.KosmosObject, base.KosmosOwnedObject,
-                       base.KosmosPersistentObject):
+class MonitorParameter(base.KosmosObject):
 
     VERSION = '1.0'
 
