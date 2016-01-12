@@ -166,10 +166,10 @@ class StateMachineEnforce(object):
 
 class KosmosActions(StateMachineEnforce, PreDefinedEnumType):
 
-    CREATE = 'create'
-    UPDATE = 'update'
-    DELETE = 'delete'
-    NONE = 'none'
+    CREATE = 'CREATE'
+    UPDATE = 'UPDATE'
+    DELETE = 'DELETE'
+    NONE = 'NONE'
 
     ALLOWED_TRANSITIONS = {
         CREATE: {
