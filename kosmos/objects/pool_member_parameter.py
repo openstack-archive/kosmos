@@ -18,8 +18,7 @@ from kosmos.objects import fields
 
 
 @VersionedObjectRegistry.register
-class PoolMemberParameter(base.KosmosObject, base.KosmosOwnedObject,
-                          base.KosmosPersistentObject):
+class PoolMemberParameter(base.KosmosObject):
 
     VERSION = '1.0'
 
