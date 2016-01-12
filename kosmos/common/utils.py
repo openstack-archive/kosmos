@@ -17,6 +17,7 @@
 # when needed.
 
 """Utilities and helper functions."""
+import uuid
 
 import datetime
 import hashlib
@@ -73,3 +74,7 @@ class exception_logger(object):
                 with excutils.save_and_reraise_exception():
                     self.logger(e)
         return call
+
+
+def generate_uuid():
+    return str(uuid.uuid4())
