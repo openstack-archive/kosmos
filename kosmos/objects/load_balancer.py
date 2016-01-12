@@ -20,10 +20,10 @@ from kosmos.objects import fields
 class LoadBalancerStatus(fields.StateMachineEnforce,
                          fields.PreDefinedEnumType):
 
-    ACTIVE = 'active'
-    PENDING = 'pending'
-    ERROR = 'error'
-    DELETED = 'deleted'
+    ACTIVE = 'ACTIVE'
+    PENDING = 'PENDING'
+    ERROR = 'ERROR'
+    DELETED = 'DELETED'
 
     ALLOWED_TRANSITIONS = {
         ACTIVE: {

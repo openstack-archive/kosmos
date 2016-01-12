@@ -19,12 +19,12 @@ from kosmos.objects import fields
 
 class PoolMemberStatus(fields.StateMachineEnforce, fields.PreDefinedEnumType):
 
-    ACTIVE = 'active'
-    PENDING = 'pending'
-    DEGRADED = 'degraded'
-    DOWN = 'down'
-    ERROR = 'error'
-    DELETED = 'deleted'
+    ACTIVE = 'ACTIVE'
+    PENDING = 'PENDING'
+    DEGRADED = 'DEGRADED'
+    DOWN = 'DOWN'
+    ERROR = 'ERROR'
+    DELETED = 'DELETED'
 
     ALLOWED_TRANSITIONS = {
         ACTIVE: {
