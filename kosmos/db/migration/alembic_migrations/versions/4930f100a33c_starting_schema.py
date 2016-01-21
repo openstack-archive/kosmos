@@ -20,7 +20,6 @@ Create Date: 2016-01-12 14:07:30.540955
 """
 
 # revision identifiers, used by Alembic.
-import kosmos
 
 revision = '4930f100a33c'
 down_revision = None
@@ -29,12 +28,12 @@ depends_on = None
 
 from alembic import op
 import sqlalchemy as sa
+from kosmos.db.sqlalchemy.types import UUID
 
 
 def upgrade():
-
     op.create_table('monitors',
-                    sa.Column('id', kosmos.db.sqla.types.UUID(),
+                    sa.Column('id', UUID(),
                               nullable=False),
                     sa.Column('project_id', sa.String(length=36),
                               nullable=False),
@@ -60,7 +59,7 @@ def upgrade():
                     sa.PrimaryKeyConstraint('id', name='monitor_pk')
                     )
     op.create_table('pools',
-                    sa.Column('id', kosmos.db.sqla.types.UUID(),
+                    sa.Column('id', UUID(),
                               nullable=False),
                     sa.Column('project_id', sa.String(length=36),
                               nullable=False),
@@ -82,7 +81,7 @@ def upgrade():
                     sa.PrimaryKeyConstraint('id', name='pool_pk')
                     )
     op.create_table('loadbalancers',
-                    sa.Column('id', kosmos.db.sqla.types.UUID(),
+                    sa.Column('id', UUID(),
                               nullable=False),
                     sa.Column('project_id', sa.String(length=36),
                               nullable=False),
@@ -129,7 +128,7 @@ def upgrade():
                                             name='monitor_parameter_pk')
                     )
     op.create_table('pool_members',
-                    sa.Column('id', kosmos.db.sqla.types.UUID(),
+                    sa.Column('id', UUID(),
                               nullable=False),
                     sa.Column('project_id', sa.String(length=36),
                               nullable=False),

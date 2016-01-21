@@ -13,12 +13,12 @@
 # under the License.
 from oslo_config import cfg
 from oslo_log import log as logging
-from oslo_policy import policy
 from oslo_policy import opts
+from oslo_policy import policy
 
+from common import exceptions
 from kosmos._i18n import _
 from kosmos._i18n import _LI
-from kosmos import exceptions
 from kosmos.common import config
 
 CONF = cfg.CONF
