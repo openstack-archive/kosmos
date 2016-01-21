@@ -15,6 +15,7 @@
 from kosmos._i18n import _
 from kosmos.objects import base
 from kosmos.objects import fields
+from kosmos.db.sqlalchemy.tables import loadbalancers
 
 
 class LoadBalancerStatus(fields.StateMachineEnforce,
@@ -55,12 +56,14 @@ class LoadBalancer(base.KosmosObject, base.KosmosOwnedObject,
 
     VERSION = '1.0'
 
+    DB_TABLE = loadbalancers
+
     fields = {
         'name': fields.StringField(),
         'description': fields.StringField(nullable=True),
         'fqdn': fields.DNSFQDN(),
         'zone_name': fields.DNSZoneName(),
-        'flavor': fields.UUIDField(),
+        'flavour_id': fields.UUIDField(),
         'appliance_id': fields.StringField(),
         'pool': fields.ObjectField('Pool'),
         'status': LoadBalancerStatus(),

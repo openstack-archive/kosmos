@@ -20,20 +20,21 @@ Create Date: 2016-01-12 14:07:30.540955
 """
 
 # revision identifiers, used by Alembic.
-import kosmos
 
 revision = '4930f100a33c'
+down_revision = None
 branch_labels = None
 depends_on = None
 
 from alembic import op
 import sqlalchemy as sa
+from kosmos.db.sqlalchemy.types import UUID
+import kosmos
 
 
 def upgrade():
-
     op.create_table('monitors',
-                    sa.Column('id', kosmos.db.sqla.types.UUID(),
+                    sa.Column('id', UUID(),
                               nullable=False),
                     sa.Column('project_id', sa.String(length=36),
                               nullable=False),
@@ -52,12 +53,14 @@ def upgrade():
                     sa.Column('name', sa.String(length=255), nullable=False),
                     sa.Column('description', sa.String(length=255),
                               nullable=True),
-                    sa.Column('type', sa.String(length=255), nullable=False),
+                    sa.Column('type',
+                              sa.Enum('TCP', 'UDP', 'ICMP', 'HTTP', 'HTTPS',
+                                      'SSH'), nullable=False),
                     sa.Column('auth', sa.Boolean(), nullable=False),
                     sa.PrimaryKeyConstraint('id', name='monitor_pk')
                     )
     op.create_table('pools',
-                    sa.Column('id', kosmos.db.sqla.types.UUID(),
+                    sa.Column('id', UUID(),
                               nullable=False),
                     sa.Column('project_id', sa.String(length=36),
                               nullable=False),
@@ -79,7 +82,7 @@ def upgrade():
                     sa.PrimaryKeyConstraint('id', name='pool_pk')
                     )
     op.create_table('loadbalancers',
-                    sa.Column('id', kosmos.db.sqla.types.UUID(),
+                    sa.Column('id', UUID(),
                               nullable=False),
                     sa.Column('project_id', sa.String(length=36),
                               nullable=False),
@@ -126,7 +129,7 @@ def upgrade():
                                             name='monitor_parameter_pk')
                     )
     op.create_table('pool_members',
-                    sa.Column('id', kosmos.db.sqla.types.UUID(),
+                    sa.Column('id', UUID(),
                               nullable=False),
                     sa.Column('project_id', sa.String(length=36),
                               nullable=False),
@@ -145,7 +148,8 @@ def upgrade():
                     sa.Column('name', sa.String(length=255), nullable=False),
                     sa.Column('description', sa.String(length=255),
                               nullable=True),
-                    sa.Column('type', sa.String(length=255), nullable=False),
+                    sa.Column('type', sa.Enum('IP', 'NEUTRON_LBAAS_V2',
+                                              'NEUTRON_PORT'), nullable=False),
                     sa.Column('pool_id', sa.String(length=36), nullable=False),
                     sa.ForeignKeyConstraint(['pool_id'], ['pools.id'],
                                             name='pool_members_pool_fk',

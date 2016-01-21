@@ -1,4 +1,4 @@
-# © Copyright 2016 Hewlett Packard Enterprise Development Company LP
+# Copyright 2016 Hewlett Packard Enterprise Development Company LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -16,13 +16,28 @@ import sqlalchemy as sa
 from oslo_config import cfg
 from oslo_utils import timeutils
 
-from kosmos.db.sqla.types import UUID
+from kosmos.db.sqlalchemy.types import UUID
 from kosmos.common import utils
 
 
 CONF = cfg.CONF
 
 metadata = sa.MetaData()
+
+POOL_MEMBER_TYPES = sa.Enum(
+    'IP',
+    'NEUTRON_LBAAS_V2',
+    'NEUTRON_PORT',
+)
+
+MONITOR_TYPES = sa.Enum(
+    'TCP',
+    'UDP',
+    'ICMP',
+    'HTTP',
+    'HTTPS',
+    'SSH',
+)
 
 ACTIONS = sa.Enum(
     'CREATE',
@@ -75,7 +90,7 @@ monitors = sa.Table(
     sa.Column('name', sa.String(length=255), nullable=False),
     sa.Column('description', sa.String(length=255), nullable=True),
 
-    sa.Column('type', sa.String(length=255), nullable=False),
+    sa.Column('type', MONITOR_TYPES, nullable=False),
     sa.Column('auth', sa.Boolean, nullable=False, default=False),
 
     sa.PrimaryKeyConstraint('id', name="monitor_pk"),
@@ -167,7 +182,7 @@ pool_members = sa.Table(
     sa.Column('description', sa.String(length=255), nullable=True),
 
 
-    sa.Column('type', sa.String(length=255), nullable=False),
+    sa.Column('type', POOL_MEMBER_TYPES, nullable=False),
     sa.Column('pool_id', UUID, nullable=False),
 
     sa.PrimaryKeyConstraint('id', name="pool_member_pk"),
