@@ -25,17 +25,16 @@ __all__ = [
     'get_notifier',
 ]
 
-from oslo_config import cfg
 import oslo_messaging as messaging
+from oslo_config import cfg
 from oslo_messaging import server as msg_server
 from oslo_messaging.rpc import dispatcher as rpc_dispatcher
 from oslo_serialization import jsonutils
 from oslo_versionedobjects.base import VersionedObjectSerializer
 
+import common.exceptions
 import kosmos.context
-import kosmos.exceptions
 from kosmos.objects.base import KosmosObject
-
 
 CONF = cfg.CONF
 TRANSPORT = None
@@ -51,7 +50,7 @@ CONF.register_opts([
         deprecated_name='allowed_rpc_exception_modules')
 ])
 ALLOWED_EXMODS = [
-    kosmos.exceptions.__name__,
+    common.exceptions.__name__,
 ]
 EXTRA_EXMODS = []
 
