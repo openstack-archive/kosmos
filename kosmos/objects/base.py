@@ -11,12 +11,15 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
+import six
 
 from oslo_log import log as logging
 from oslo_versionedobjects import base as ovoo_base
 
 from kosmos.objects import fields
 from kosmos import objects
+from kosmos.db import api as db_api
+import sqlalchemy.exc as exc
 
 LOG = logging.getLogger('kosmos')
 
@@ -38,6 +41,45 @@ class KosmosObject(ovoo_base.VersionedObject):
     OBJ_PROJECT_NAMESPACE = 'kosmos'
 
     DB_TABLE = ''
+
+    @classmethod
+    def get_by_id(cls, context, id):
+        db = db_api.get_instance()
+        db_rs = db.get_object_by_id(context, cls.DB_TABLE, id)
+
+        return cls._sqla_to_obj(db_rs)
+
+
+    @classmethod
+    def find(cls, context, criterion):
+        db = db_api.get_instance()
+        db_rs = db.find_objects(context, cls.DB_TABLE, criterion)
+
+        items = []
+
+        for rs in db_rs:
+            items.append(cls._sqla_to_obj(rs))
+
+        return items
+
+
+    @classmethod
+    def _sqla_to_obj(cls, rs):
+        obj = cls()
+
+        for field in six.iterkeys(obj.fields):
+            try:
+                obj.__setattr__(field, rs[field])
+            except exc.NoSuchColumnError:
+                if '%s_id' % field in rs:
+                    inner_cls = objects.base.KosmosObject.obj_class_from_name(
+                            'Pool', '1.0')
+                    if issubclass(inner_cls, fields.ObjectField):
+                        inner_obj \
+                            = inner_cls.get_by_id(rs['%s_id' % field])
+                        obj.__setattr__(field, inner_obj)
+
+        return obj
 
 
 class KosmosOwnedObject(object):

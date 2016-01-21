@@ -16,7 +16,7 @@ import sqlalchemy as sa
 from oslo_config import cfg
 from oslo_utils import timeutils
 
-from kosmos.db.sqla.types import UUID
+from .types import UUID
 from kosmos.common import utils
 
 

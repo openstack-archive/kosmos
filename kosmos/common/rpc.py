@@ -29,11 +29,17 @@ import kosmos.common.context
 import kosmos.common.exceptions
 import oslo_messaging as messaging
 from kosmos.objects.base import KosmosObject
+
+import oslo_messaging as messaging
 from oslo_config import cfg
 from oslo_messaging import server as msg_server
 from oslo_messaging.rpc import dispatcher as rpc_dispatcher
 from oslo_serialization import jsonutils
 from oslo_versionedobjects.base import VersionedObjectSerializer
+
+import kosmos.common.exceptions
+import kosmos.context
+from kosmos.objects.base import KosmosObject
 
 CONF = cfg.CONF
 TRANSPORT = None

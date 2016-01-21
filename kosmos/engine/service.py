@@ -15,8 +15,10 @@ from oslo_config import cfg
 import oslo_messaging as messaging
 from oslo_log import log as logging
 
+from kosmos.db import api as db_api
 from kosmos import service
-
+from kosmos import context
+from kosmos import objects
 
 LOG = logging.getLogger(__name__)
 CONF = cfg.CONF
@@ -35,3 +37,23 @@ class Service(service.RPCService, service.Service):
     @property
     def service_name(self):
         return 'engine'
+
+    def start(self):
+        objects.register_all()
+        db = db_api.get_instance()
+        LOG.info(db.get_loadbalancers(context.KosmosContext()))
+        LOG.info(db.get_loadbalancer_by_id(
+            context.KosmosContext(),
+            "3e3f2faa-dbb8-4c18-ac0d-3d766455ebd6")[0])
+
+        LOG.info(objects.load_balancer.LoadBalancer.get_by_id(
+            context.KosmosContext(),
+                                                  "3e3f2faa-dbb8-4c18-ac0d-3d766455ebd6"))
+
+        LOG.info(objects.load_balancer.LoadBalancer.find(
+            context.KosmosContext(),{'fqdn': '%test.domain.tld.'}))
+
+        super(Service, self).start()
+
+
+
