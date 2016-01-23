@@ -1,0 +1,9 @@
+Code-Review+2: Michael Johnson <johnsomor@gmail.com>
+Code-Review+2: Doug Wiegley <dougwig@parkside.io>
+Workflow+1: Doug Wiegley <dougwig@parkside.io>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Sat, 23 Jan 2016 20:47:35 +0000
+Reviewed-on: https://review.openstack.org/255979
+Project: openstack/kosmos
+Branch: refs/heads/master
