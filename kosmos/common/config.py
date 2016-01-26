@@ -1,4 +1,6 @@
 # Copyright 2011 VMware, Inc., 2014 A10 Networks
+# Copyright 2015 Hewlett Packard Enterprise Development LP
+#
 # All Rights Reserved.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License"); you may
@@ -16,6 +18,7 @@
 """
 Routines for configuring Kosmos
 """
+import os
 
 from oslo_config import cfg
 from oslo_db import options as db_options
@@ -44,6 +47,16 @@ core_cli_opts = []
 cfg.CONF.register_opts(core_opts)
 cfg.CONF.register_cli_opts(core_cli_opts)
 
+cfg.CONF.register_opts([
+    cfg.StrOpt(
+        'pybasedir',
+        default=os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                             '../')),
+        help='Directory where the kosmos python module is installed'
+    ),
+    cfg.StrOpt('state-path', default='/var/lib/kosmos',
+               help='Top-level directory for maintaining kosmos\'s state'),
+])
 
 # Ensure that the control exchange is set correctly
 messaging.set_transport_defaults(control_exchange='kosmos')
@@ -58,10 +71,9 @@ db_options.set_defaults(cfg.CONF,
 logging.register_options(cfg.CONF)
 
 
-def init(args, **kwargs):
-    cfg.CONF(args=args, project='kosmos',
-             version='%%prog %s' % version.version_info.release_string(),
-             **kwargs)
+def init(args):
+    cfg.CONF(args=args[1:], project='kosmos',
+             version='%%prog %s' % version.version_info.release_string())
 
 
 def setup_logging(conf):
@@ -72,3 +84,8 @@ def setup_logging(conf):
     product_name = "kosmos"
     logging.setup(conf, product_name)
     LOG.info(_LI("Logging enabled!"))
+
+
+def read_config(prog, argv):
+    logging.register_options(cfg.CONF)
+    cfg.CONF(argv[1:], project='kosmos', prog=prog)

@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 # Copyright 2015 Hewlett Packard Enterprise Development LP
-
+#
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
 # a copy of the License at
@@ -12,8 +11,25 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
+import sys
 
-import pbr.version
+from oslo_config import cfg
+from oslo_service import service
 
-__version__ = pbr.version.VersionInfo(
-    'kosmos').version_string()
+from kosmos.conductor import service as conductor
+from kosmos.common import config
+
+CONF = cfg.CONF
+
+
+def main():
+
+    config.setup_logging(CONF)
+    config.init(sys.argv)
+
+    process_launcher = service.ProcessLauncher(CONF)
+    process_launcher.launch_service(
+        conductor.Service(threads=CONF['service:conductor'].threads),
+        workers=CONF['service:conductor'].workers)
+
+    process_launcher.wait()
