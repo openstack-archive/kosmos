@@ -1,0 +1,9 @@
+Code-Review+2: Doug Wiegley <dougwig@parkside.io>
+Code-Review+2: Graham Hayes <graham.hayes@hpe.com>
+Workflow+1: Graham Hayes <graham.hayes@hpe.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Tue, 26 Jan 2016 15:01:41 +0000
+Reviewed-on: https://review.openstack.org/271644
+Project: openstack/kosmos
+Branch: refs/heads/master
