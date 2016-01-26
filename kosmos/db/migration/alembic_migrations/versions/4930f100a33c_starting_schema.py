@@ -1,4 +1,4 @@
-# © Copyright 2016 Hewlett Packard Enterprise Development Company LP
+# (C) Copyright 2016 Hewlett Packard Enterprise Development Company LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -23,6 +23,7 @@ Create Date: 2016-01-12 14:07:30.540955
 import kosmos
 
 revision = '4930f100a33c'
+down_revision = None
 branch_labels = None
 depends_on = None
 
