@@ -58,3 +58,5 @@ ChangeLog
 *.sublime-*
 # Flake8 Results
 flake8_results.html
+
+releasenotes/build
