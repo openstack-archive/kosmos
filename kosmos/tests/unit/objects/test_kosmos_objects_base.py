@@ -169,7 +169,7 @@ class TestKosmosObjectsBase(test.TestCase):
             'versioned_object.version': '1.0'
         }
 
-        self.assertDictEqual(test_object.obj_to_primitive(), expected_output)
+        self.assertEqual(test_object.obj_to_primitive(), expected_output)
 
 
 class TestKosmosObjectsFields(test.TestCase):
