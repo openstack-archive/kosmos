@@ -1,7 +1,6 @@
 [run]
 branch = True
 source = kosmos
-omit = kosmos/openstack/*
 
 [report]
 ignore_errors = True
