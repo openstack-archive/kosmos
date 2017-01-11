@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # Copyright 2010-2011 OpenStack Foundation
 # Copyright 2015-2016 Hewlett Packard Enterprise Development LP
 #
