@@ -1,0 +1,9 @@
+Code-Review+1: wang zhiming <wangzm49@chinaunicom.cn>
+Code-Review+2: Graham Hayes <ghayes@suse.de>
+Workflow+1: Graham Hayes <ghayes@suse.de>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Tue, 22 Aug 2017 11:49:09 +0000
+Reviewed-on: https://review.openstack.org/495183
+Project: openstack/kosmos
+Branch: refs/heads/master
