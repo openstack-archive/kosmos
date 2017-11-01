@@ -32,8 +32,8 @@ from kosmos.objects.base import KosmosObject
 from oslo_config import cfg
 from oslo_messaging import server as msg_server
 from oslo_messaging.rpc import dispatcher as rpc_dispatcher
-from oslo_serialization import jsonutils
 from oslo_versionedobjects.base import VersionedObjectSerializer
+import ujson
 
 CONF = cfg.CONF
 TRANSPORT = None
@@ -95,7 +95,7 @@ def get_allowed_exmods():
 class JsonPayloadSerializer(messaging.NoOpSerializer):
     @staticmethod
     def serialize_entity(context, entity):
-        return jsonutils.to_primitive(entity, convert_instances=True)
+        return ujson.to_primitive(entity, convert_instances=True)
 
 
 class KosmosObjectSerializer(VersionedObjectSerializer):
