@@ -1,0 +1,8 @@
+Code-Review+2: Graham Hayes <gr@ham.ie>
+Workflow+1: Graham Hayes <gr@ham.ie>
+Verified+2: Zuul
+Submitted-by: Zuul
+Submitted-at: Fri, 19 Jan 2018 17:22:33 +0000
+Reviewed-on: https://review.openstack.org/533883
+Project: openstack/kosmos
+Branch: refs/heads/master
